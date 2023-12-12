@@ -37,7 +37,6 @@ void printEnemyThree();
 void eraseEnemyThree();
 string enemyThreeDirectionControl(string direction);
 void moveEnemyThree(string direction);
-void printFire();
 int moveFireX1 = 50, moveFireY1 = 1;
 int loadingX = 64, loadingY = 29;
 int PlayerX = 6, playerY = 29;          // varaibles for player position
@@ -83,7 +82,7 @@ void hideCursor()
 int enemyOneHealth = 1;
 int enemyTwoHealth = 1;
 int enemyThreeHealth = 1;
-//checking for enemy died
+// checking for enemy died
 bool isDiedOne = false;
 bool isDiedTwo = false;
 bool isDiedThree = false;
@@ -399,7 +398,7 @@ start:
             eraseEnemyTwo();
             isDiedTwo = true; // for not printing again
         }
-        if ( !isDiedThree && enemyThreeHealth == 0)
+        if (!isDiedThree && enemyThreeHealth == 0)
         {
             eraseEnemyThree();
             isDiedThree = true; // for not printing again
@@ -917,21 +916,21 @@ void printPower()
 }
 void printFire()
 {
-    if (fireDirection == "HR")
+    if (fireDirection == "HR" && getCharAtxy(PlayerX + 3, playerY) == ' ')
     {
         fireX = PlayerX + 2;
         fireY = playerY + 1;
         gotoxy(fireX, fireY);
         cout << "*";
     }
-    else if (fireDirection == "HL")
+    else if (fireDirection == "HL" && getCharAtxy(PlayerX - 1, playerY) == ' ')
     {
         fireX = PlayerX - 2;
         fireY = playerY + 1;
         gotoxy(fireX, fireY);
         cout << "*";
     }
-    else if (fireDirection == "UP")
+    else if (fireDirection == "UP" && getCharAtxy(PlayerX + 2, playerY - 1) == ' ')
     {
         fireX = PlayerX + 2;
         fireY = playerY - 1;
@@ -946,7 +945,7 @@ void moveFire()
     {
         gotoxy(fireX, fireY);
         cout << " ";
-        if (getCharAtxy(fireX - 2, fireY) == ' ')
+        if (getCharAtxy(fireX - 2, fireY) == ' ' &&  getCharAtxy(PlayerX - 1, playerY) == ' ' )
         {
             fireX -= 1;
             gotoxy(fireX, fireY);
@@ -1012,7 +1011,7 @@ void moveFire()
         gotoxy(fireX, fireY);
         cout << " ";
 
-        if (getCharAtxy(fireX + 2, fireY) == ' ')
+        if (getCharAtxy(fireX + 2, fireY) == ' ' &&  getCharAtxy(PlayerX + 3, playerY) == ' ')
         {
             fireX += 1;
             gotoxy(fireX, fireY);
@@ -1077,7 +1076,7 @@ void moveFire()
     {
         gotoxy(fireX, fireY);
         cout << " ";
-        if (getCharAtxy(fireX, fireY - 2) == ' ')
+        if (getCharAtxy(fireX, fireY - 2) == ' ' &&  getCharAtxy(PlayerX + 2, playerY - 1) == ' ' && getCharAtxy(PlayerX + 1, playerY - 1) == ' ')
         {
             fireY -= 1;
             gotoxy(fireX, fireY);
