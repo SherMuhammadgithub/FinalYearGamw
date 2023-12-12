@@ -1054,7 +1054,7 @@ void moveFire()
             cout << " ";
             isFire = false;
         }
-        else if (getCharAtxy(fireX - 2, fireY) == '/' || getCharAtxy(fireX - 2, fireY) == '\\' || getCharAtxy(fireX - 2, fireY) == '(' || getCharAtxy(fireX - 2, fireY) == '0')
+        else if (getCharAtxy(fireX + 2, fireY) == '/' || getCharAtxy(fireX - 2, fireY) == '\\' || getCharAtxy(fireX + 2, fireY) == '(' || getCharAtxy(fireX + 2, fireY) == '0')
         {
             incraesePower++;
             dangerousEnemyHealth--;
