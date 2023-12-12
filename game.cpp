@@ -6,7 +6,6 @@
 #include <chrono>
 using namespace std;
 string setcolor(unsigned short color);
-// int blue = 1, green = 2, cyan = 3, red = 4, brown = 6, lightwhite = 7, lightblue = 9, lightgreen = 10, lightcyan = 11, lightred = 12, yellow = 14, white = 15;
 string setcolor(unsigned short color)
 {
     HANDLE hcon = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -59,20 +58,17 @@ void enemy1Fire();
 void moveEnemy1Fire();
 bool enemyOneFire = false;
 int enemyOneFireX = 0, enemyOneFireY = 0;
-//@@@@@@@@@@@
 // enemyTwo firing
 void enemy2Fire();
 void moveEnemy2Fire();
 bool enemyTwoFire = false;
 int enemyTwoFireX = 0, enemyTwoFireY = 0;
-//@@@@@@@@@@@
 // Pump Fire
 void pumpFire();
 void movePumpFire();
 bool pumpFirevar = false;
 int pumpFireX = 0, pumpFireY = 0;
 void firingPump();
-//@@@@@@@@@@@
 // printing scoreBoard
 void printScoreBoard();
 void hideCursor()
@@ -84,11 +80,13 @@ void hideCursor()
     SetConsoleCursorInfo(consoleHandle, &info);
 }
 
-//@@@@@@@@@@@
 int enemyOneHealth = 1;
 int enemyTwoHealth = 1;
 int enemyThreeHealth = 1;
-//@@@@@@@@@@@@@
+//checking for enemy died
+bool isDiedOne = false;
+bool isDiedTwo = false;
+bool isDiedThree = false;
 // printing obstacles in the game
 void printObstacles()
 {
@@ -127,7 +125,6 @@ void printObstacles()
     cout << "&&&&&&&&&&                ::::::::::";
     setcolor(7);
 }
-//@@@@@@@@@@@@@
 // dangerous enemy
 int dangerousEnemyHealth = 10;
 bool isDangerousEnemy = false; // for printing dangerous enemy at certain time
@@ -195,10 +192,7 @@ void moveDangerousEnemy(string direction)
     }
     drawDangerousEnemy();
 }
-//@@@@@@@@@@@@@
 // dangerouly enemy frirng
-void dangerousEnemyFire();
-void moveDangerousEnemyFire();
 bool dangerousEnemyFireVar = false;
 int dangerousEnemyFireX = 0, dangerousEnemyFireY = 0;
 void dangerousEnemyFire()
@@ -245,21 +239,20 @@ main()
 {
 
     string choices;
-    // printBanner();
-    // loading();
-    // int i = 1;
-    // while (i <= 40)
-    // {
-    //     moveLoading();
-    //     Sleep(100);
-    //     if (i == 40)
-    //     {
-    //         cout << setw(10) << "Loading Completed";
-    //     }
-    //     i++;
-    // }
+    printBanner();
+    loading();
+    int i = 1;
+    while (i <= 40)
+    {
+        moveLoading();
+        Sleep(100);
+        if (i == 40)
+        {
+            cout << setw(10) << "Loading Completed";
+        }
+        i++;
+    }
 
-    // sleep_for(seconds(3));
     Sleep(700);
     system("cls");
     string dangerEnemyDirection = "right";
@@ -396,17 +389,20 @@ start:
         }
 
         // check for enemy died
-        if (enemyOneHealth == 0)
+        if (!isDiedOne && enemyOneHealth == 0)
         {
             eraseEnemyOne();
+            isDiedOne = true; // for not printing again
         }
-        if (enemyTwoHealth == 0)
+        if (!isDiedTwo && enemyTwoHealth == 0)
         {
             eraseEnemyTwo();
+            isDiedTwo = true; // for not printing again
         }
-        if (enemyThreeHealth == 0)
+        if ( !isDiedThree && enemyThreeHealth == 0)
         {
             eraseEnemyThree();
+            isDiedThree = true; // for not printing again
         }
         // checking for win or lose
         if (incraesePower <= 0)
@@ -423,7 +419,6 @@ start:
             system("cls");
             isDangerousEnemy = true;
             goto start;
-            // break;
         }
         // fire through dangerous enemy
         if (!dangerousEnemyFireVar && isDangerousEnemy)
@@ -1124,7 +1119,7 @@ void moveFire()
             cout << " ";
             isFire = false;
         }
-        else if (getCharAtxy(fireX - 2, fireY) == '/' || getCharAtxy(fireX - 2, fireY) == '\\' || getCharAtxy(fireX - 2, fireY) == 'v')
+        else if (getCharAtxy(fireX - 2, fireY) == '/' || getCharAtxy(fireX - 2, fireY) == 'I' || getCharAtxy(fireX - 2, fireY) == 'v')
         {
             incraesePower++;
             dangerousEnemyHealth--;
